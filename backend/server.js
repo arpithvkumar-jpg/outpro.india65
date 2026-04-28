@@ -1,3 +1,4 @@
+require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
@@ -6,17 +7,26 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// Connect MongoDB and start server
-mongoose.connect("mongodb+srv://arpithvkumar:Arpith%405555@cluster0.wzpckev.mongodb.net/outproindia?retryWrites=true&w=majority")
-.then(() => {
-  console.log("Connected to MongoDB");
-  app.listen(5000, () => console.log("Server running on port 5000"));
-})
-.catch((error) => {
-  console.error("MongoDB connection error:", error);
+const PORT = process.env.PORT || 5000;
+
+// ✅ Start server FIRST
+app.listen(PORT, () => {
+  console.log(`🚀 Server running on port ${PORT}`);
 });
 
-// Schema
+// ✅ MongoDB connection (separate)
+mongoose.connect(process.env.MONGO_URI)
+.then(() => console.log("✅ Connected to MongoDB"))
+.catch((error) => console.error("❌ MongoDB error:", error));
+
+
+// ================= ROOT ROUTE (IMPORTANT FOR RENDER) =================
+app.get("/", (req, res) => {
+  res.send("API is running...");
+});
+
+
+// ================= PROJECT =================
 const projectSchema = new mongoose.Schema({
   title: String,
   desc: String,
@@ -29,20 +39,27 @@ const projectSchema = new mongoose.Schema({
 
 const Project = mongoose.model("Project", projectSchema);
 
-// API - GET projects
 app.get("/projects", async (req, res) => {
-  const projects = await Project.find();
-  res.json(projects);
+  try {
+    const projects = await Project.find();
+    res.json(projects);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
 });
 
-// API - ADD project
 app.post("/projects", async (req, res) => {
-  const project = new Project(req.body);
-  await project.save();
-  res.json(project);
+  try {
+    const project = new Project(req.body);
+    await project.save();
+    res.json(project);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
 });
 
-// Testimonials Schema
+
+// ================= TESTIMONIAL =================
 const testimonialSchema = new mongoose.Schema({
   name: String,
   role: String,
@@ -52,19 +69,27 @@ const testimonialSchema = new mongoose.Schema({
 
 const Testimonial = mongoose.model("Testimonial", testimonialSchema);
 
-// GET testimonials
 app.get("/testimonials", async (req, res) => {
-  const data = await Testimonial.find();
-  res.json(data);
+  try {
+    const data = await Testimonial.find();
+    res.json(data);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
 });
 
-// ADD testimonial
 app.post("/testimonials", async (req, res) => {
-  const item = new Testimonial(req.body);
-  await item.save();
-  res.json(item);
+  try {
+    const item = new Testimonial(req.body);
+    await item.save();
+    res.json(item);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
 });
-// Services Schema
+
+
+// ================= SERVICE =================
 const serviceSchema = new mongoose.Schema({
   title: String,
   desc: String,
@@ -73,15 +98,21 @@ const serviceSchema = new mongoose.Schema({
 
 const Service = mongoose.model("Service", serviceSchema);
 
-// GET services
 app.get("/services", async (req, res) => {
-  const data = await Service.find();
-  res.json(data);
+  try {
+    const data = await Service.find();
+    res.json(data);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
 });
 
-// ADD service
 app.post("/services", async (req, res) => {
-  const item = new Service(req.body);
-  await item.save();
-  res.json(item);
+  try {
+    const item = new Service(req.body);
+    await item.save();
+    res.json(item);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
 });

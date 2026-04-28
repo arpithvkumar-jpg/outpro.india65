@@ -4,7 +4,7 @@ function Portfolio() {
   const [projects, setProjects] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:5000/projects")
+    fetch("https://outpro-india65-2.onrender.com/projects")
       .then((res) => res.json())
       .then((data) => setProjects(data));
   }, []);

@@ -141,11 +141,10 @@ app.post("/services", async (req, res) => {
 // ================= CONNECT DB + START SERVER =================
 // Check if MONGO_URI exists
 if (!process.env.MONGO_URI) {
-  console.error("❌ MONGO_URI not defined in environment variables!");
-  process.exit(1);
+  console.warn("⚠️ MONGO_URI not defined - server will run without database");
 }
 
-mongoose.connect(process.env.MONGO_URI)
+mongoose.connect(process.env.MONGO_URI || "dummy")
 .then(() => {
   console.log("✅ Connected to MongoDB");
 
@@ -155,6 +154,10 @@ mongoose.connect(process.env.MONGO_URI)
 
 })
 .catch((error) => {
-  console.error("❌ MongoDB connection error:", error.message);
-  // Don't exit - let the server start anyway for health checks
+  console.warn("⚠️ MongoDB connection failed - server will run without DB:", error.message);
+  
+  // Start server anyway even without DB
+  app.listen(PORT, () => {
+    console.log(`🚀 Server running on port ${PORT} (without database)`);
+  });
 });

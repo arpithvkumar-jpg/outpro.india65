@@ -5,8 +5,9 @@ import react from '@vitejs/plugin-react'
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), '')
   return {
-    base: env.VITE_PUBLIC_PATH || '/',
+  
     plugins: [react(), tailwindcss()],
+      base:  '/',
     build: {
       minify: 'esbuild',
       sourcemap: false,

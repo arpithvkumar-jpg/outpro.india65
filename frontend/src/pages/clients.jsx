@@ -8,7 +8,7 @@ function TestimonialsWhite() {
   const [testimonials, setTestimonials] = useState([]);
 
   useEffect(() => {
-    fetch("https://outpro-india65-3.onrender.com/testimonials")
+    fetch("https://outpro-india65-5.onrender.com/testimonials")
       .then((res) => res.json())
       .then((data) => setTestimonials(data));
   }, []);

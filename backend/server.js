@@ -5,7 +5,7 @@ const cors = require("cors");
 
 const app = express();
 
-// ✅ CORS (allow all origins for development)
+
 app.use(cors({
   origin: true,
   credentials: true
@@ -37,15 +37,11 @@ const Project = mongoose.model("Project", projectSchema);
 // GET
 app.get("/projects", async (req, res) => {
   try {
-    if (mongoose.connection.readyState !== 1) {
-      console.log("⚠️ DB not connected, returning empty array");
-      return res.json([]);
-    }
     const data = await Project.find();
-    res.json(data || []);
+    res.json(data); // send data
   } catch (err) {
-    console.error("Projects Error:", err.message);
-    res.status(200).json([]); // Return empty array instead of 500
+    console.log(err);
+    res.json([]); // send empty if error
   }
 });
 
@@ -75,15 +71,11 @@ const Testimonial = mongoose.model("Testimonial", testimonialSchema);
 // GET
 app.get("/testimonials", async (req, res) => {
   try {
-    if (mongoose.connection.readyState !== 1) {
-      console.log("⚠️ DB not connected, returning empty array");
-      return res.json([]);
-    }
     const data = await Testimonial.find();
-    res.json(data || []);
+    res.json(data); // send data
   } catch (err) {
-    console.error("Testimonials Error:", err.message);
-    res.status(200).json([]); // Return empty array instead of 500
+    console.log(err);
+    res.json([]); // send empty if error
   }
 });
 
@@ -112,15 +104,11 @@ const Service = mongoose.model("Service", serviceSchema);
 // GET
 app.get("/services", async (req, res) => {
   try {
-    if (mongoose.connection.readyState !== 1) {
-      console.log("⚠️ DB not connected, returning empty array");
-      return res.json([]);
-    }
     const data = await Service.find();
-    res.json(data || []);
+    res.json(data); // send data
   } catch (err) {
-    console.error("Services Error:", err.message);
-    res.status(200).json([]); // Return empty array instead of 500
+    console.log(err);
+    res.json([]); // send empty if error
   }
 });
 

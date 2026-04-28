@@ -9,17 +9,6 @@ app.use(express.json());
 
 const PORT = process.env.PORT || 5000;
 
-// ✅ Start server FIRST
-app.listen(PORT, () => {
-  console.log(`🚀 Server running on port ${PORT}`);
-});
-
-// ✅ MongoDB connection (separate)
-mongoose.connect(process.env.MONGO_URI)
-.then(() => console.log("✅ Connected to MongoDB"))
-.catch((error) => console.error("❌ MongoDB error:", error));
-
-
 // ================= ROOT ROUTE (IMPORTANT FOR RENDER) =================
 app.get("/", (req, res) => {
   res.send("API is running...");
@@ -116,3 +105,13 @@ app.post("/services", async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 });
+
+// ✅ Start server LAST (after all routes are defined)
+app.listen(PORT, () => {
+  console.log(`🚀 Server running on port ${PORT}`);
+});
+
+// ✅ MongoDB connection (separate)
+mongoose.connect(process.env.MONGO_URI)
+.then(() => console.log("✅ Connected to MongoDB"))
+.catch((error) => console.error("❌ MongoDB error:", error));

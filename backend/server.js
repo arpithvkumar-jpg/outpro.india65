@@ -38,11 +38,15 @@ const Project = mongoose.model("Project", projectSchema);
 // GET
 app.get("/projects", async (req, res) => {
   try {
+    if (mongoose.connection.readyState !== 1) {
+      console.log("⚠️ DB not connected, returning empty array");
+      return res.json([]);
+    }
     const data = await Project.find();
     res.json(data || []);
   } catch (err) {
-    console.error("Projects Error:", err);
-    res.status(500).json([]); // ✅ always return array
+    console.error("Projects Error:", err.message);
+    res.status(200).json([]); // Return empty array instead of 500
   }
 });
 
@@ -72,11 +76,15 @@ const Testimonial = mongoose.model("Testimonial", testimonialSchema);
 // GET
 app.get("/testimonials", async (req, res) => {
   try {
+    if (mongoose.connection.readyState !== 1) {
+      console.log("⚠️ DB not connected, returning empty array");
+      return res.json([]);
+    }
     const data = await Testimonial.find();
     res.json(data || []);
   } catch (err) {
-    console.error("Testimonials Error:", err);
-    res.status(500).json([]); // ✅ fix map crash
+    console.error("Testimonials Error:", err.message);
+    res.status(200).json([]); // Return empty array instead of 500
   }
 });
 
@@ -105,11 +113,15 @@ const Service = mongoose.model("Service", serviceSchema);
 // GET
 app.get("/services", async (req, res) => {
   try {
+    if (mongoose.connection.readyState !== 1) {
+      console.log("⚠️ DB not connected, returning empty array");
+      return res.json([]);
+    }
     const data = await Service.find();
     res.json(data || []);
   } catch (err) {
-    console.error("Services Error:", err);
-    res.status(500).json([]); // ✅ fix map crash
+    console.error("Services Error:", err.message);
+    res.status(200).json([]); // Return empty array instead of 500
   }
 });
 
@@ -127,6 +139,12 @@ app.post("/services", async (req, res) => {
 
 
 // ================= CONNECT DB + START SERVER =================
+// Check if MONGO_URI exists
+if (!process.env.MONGO_URI) {
+  console.error("❌ MONGO_URI not defined in environment variables!");
+  process.exit(1);
+}
+
 mongoose.connect(process.env.MONGO_URI)
 .then(() => {
   console.log("✅ Connected to MongoDB");
@@ -137,5 +155,6 @@ mongoose.connect(process.env.MONGO_URI)
 
 })
 .catch((error) => {
-  console.error("❌ MongoDB connection error:", error);
+  console.error("❌ MongoDB connection error:", error.message);
+  // Don't exit - let the server start anyway for health checks
 });

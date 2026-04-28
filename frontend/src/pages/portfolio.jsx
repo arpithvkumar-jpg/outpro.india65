@@ -1,13 +1,19 @@
 import React, { useEffect, useState } from "react";
 
+
 function Portfolio() {
   const [projects, setProjects] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    fetch("https://outpro-india65-2.onrender.com/projects")
-      .then((res) => res.json())
-      .then((data) => setProjects(data));
-  }, []);
+ useEffect(() => {
+  fetch("https://outpro-india65-3.onrender.com/projects")
+    .then((res) => res.json())
+    .then((data) => {
+      setProjects(data);
+      setLoading(false);
+    })
+    .catch(() => setLoading(false));
+}, []);
 
   const handlePlay = async (video) => {
     try {

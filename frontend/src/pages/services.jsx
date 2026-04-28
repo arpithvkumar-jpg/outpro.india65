@@ -7,7 +7,7 @@ function Services() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch("https://outpro-india65-2.onrender.com/services")
+    fetch("https://outpro-india65-3.onrender.com/services")
       .then((res) => res.json())
       .then((data) => setServices(data));
   }, []);

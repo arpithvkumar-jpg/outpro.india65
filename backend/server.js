@@ -5,10 +5,9 @@ const cors = require("cors");
 
 const app = express();
 
-// ✅ CORS (allow your Vercel frontend)
+// ✅ CORS (allow all origins for development)
 app.use(cors({
-  origin: "https://outpro-india65-416t.vercel.app",
-  methods: ["GET", "POST", "PUT", "DELETE"],
+  origin: true,
   credentials: true
 }));
 

@@ -4,7 +4,11 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 
 const app = express();
-app.use(cors());
+app.use(cors({
+  origin: "https://outpro-india65-416t.vercel.app",
+  methods:["GET", "POST", "PUT", "DELETE"],
+  credentials: true // ✅ Update with your frontend URL
+}));
 app.use(express.json());
 
 const PORT = process.env.PORT || 5000;

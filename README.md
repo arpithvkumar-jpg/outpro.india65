@@ -5,9 +5,9 @@ showcase the services and book the services
 ## Features
 
 -servies Display
-- client response
+- Database Connectivity
 - Responsive design
-- Contact 
+- Mobile Friendly Layout
 
 ## Tech Stack
 

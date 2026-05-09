@@ -27,7 +27,7 @@ git clone https://github.com/arpithvkumar-jpg/outpro.india65
 
 Live Website : https://outpro-india65-qfl3.vercel.app/
 
-note: wait 30 to 60 to load backend  
+note: wait 30 to 60 to load backend  (used vercel and render(takes 30 to 60 sec to load backend))
 
 
 

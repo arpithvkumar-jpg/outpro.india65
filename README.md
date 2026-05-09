@@ -25,7 +25,7 @@ git clone https://github.com/arpithvkumar-jpg/outpro.india65
 
 ### showcase of website
 
-Demo Website : https://outpro-india65-qfl3.vercel.app/
+Live Website : https://outpro-india65-qfl3.vercel.app/
 
 note: wait 30 to 60 to load backend  
 
